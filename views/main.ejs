@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎进入七星博士云</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="/stylesheets/main.css" rel="stylesheet" type="text/css"/>
+    <link href="/stylesheets/lanrenzhijia.css" type="text/css" rel="stylesheet" />
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/idangerous.swiper.min.js"></script>
+</head>
+<body class="home_layout">
+<!-- 代码部分begin -->
+<div class="device">
+    <div class="pagination"></div>
+    <nav class="clearfix"><a class="oper" href="/users/"><img src="/images/ico_person.png" /></a>主机8064</nav>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="main">
+                    <div class="power"><img src="/images/ic_ele_5.png" /></div>
+                    <ul class="grade clearfix">
+                        <li class="face"><img src="/images/rank_1.gif" /></li>
+                        <li class="level">优</li>
+                        <li class="lighting"><img src="/images/light_01.png" /></li>
+                    </ul>
+                    <h2><p>618ddd3</p>0.3um颗粒数个数</h2>
+                    <h3>上次检测时间：<p>2016-08-16 08:49:27</p></h3>
+                    <ul class="parameter clearfix">
+                        <li><a href="/monitor"><p>30000ug/m³</p>pm2.5</a></li>
+                        <li><a><p>31℃</p>温度</a></li>
+                        <li><a><p>38%</p>湿度</a></li>
+                        <li class="last"><a><p>0.01mg/m³</p>甲醛</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="swiper-slide" style="background-color:#eee">b</div>
+            <div class="swiper-slide" style="background-color:#ddd">c</div>
+            <div class="swiper-slide" style="background-color:#555">d</div>
+            <div class="swiper-slide" style="background-color:#eee">e</div>
+            <div class="swiper-slide" style="background-color:#ddd">f</div>
+            <div class="swiper-slide" style="background-color:#555">g</div>
+        </div>
+    </div>
+</div>
+<script>
+    var mySwiper = new Swiper('.swiper-container',{
+        pagination: '.pagination',
+        loop:true,
+        grabCursor: true,
+        paginationClickable: true
+    })
+    $('.arrow-left').on('click', function(e){
+        e.preventDefault()
+        mySwiper.swipePrev()
+    })
+    $('.arrow-right').on('click', function(e){
+        e.preventDefault()
+        mySwiper.swipeNext()
+    })
+</script>
+
+<!-- 代码部分end -->
+<footer class="home_footer">
+    <div class="menu clearfix">
+        <button onclick="javascript:window.location.href='/devices/';" class="btn1"><span>设备管理</span></button>
+        <button onclick="javascript:window.location.href='http://moral.tmall.com';" class="btn2"><span>在线商城</span></button>
+    </div>
+</footer>
+</body>
+</html>
