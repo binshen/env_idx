@@ -1,7 +1,8 @@
 module.exports = function (app, mongoose, config) {
 
     app.get('/devices/', function (req, res, next) {
-        res.render('device');
+        var user = req.session.login_user;
+        res.render('device', {u_id: user.u_id});
     });
 
     app.get('/devices/add', function (req, res, next) {

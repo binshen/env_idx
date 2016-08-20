@@ -10,33 +10,37 @@
     </a>
 </nav>
 <div class="main_box">
-    <ul class="equip_list">
-        <li class="clearfix">
-            <img src="/images/ic_device.png">
-            <p>设备名称</p>
-            <a href="/devices/detail">不在线</a>
-        </li>
-        <li class="clearfix">
-            <img src="/images/ic_device.png">
-            <p>设备名称</p>
-            <a href="/devices/detail">云端在线</a>
-        </li>
-        <li class="clearfix">
-            <img src="/images/ic_device.png">
-            <p>设备名称</p>
-            <a href="/devices/detail">云端在线</a>
-        </li>
-        <li class="clearfix">
-            <img src="/images/ic_device.png">
-            <p>设备名称</p>
-            <a href="/devices/detail">云端在线</a>
-        </li>
+    <ul class="equip_list" id="deviceUL">
     </ul>
 </div>
 </body>
 </html>
 <script>
-    $(function() {
+    var _id = '<%= u_id %>';
 
+    function loadDevice() {
+        $.get(__api_base_url + "/user/"+_id+"/get_device_info", function(data) {
+            $("#deviceUL").empty();
+            var html = "";
+            for(var i in data) {
+                html += '<li class="clearfix" onclick="goToDetail(\'' + data[i]._id + '\')">';
+                html += '<img src="/images/ic_device.png">';
+                html += '<p>' + (data[i].name == undefined || data[i].name == "" ? data[i].mac : data[i].name) + '</p>';
+                html += '<a href="javascript:void(0);">'+ (data[i].status == 1 ? "云端在线" : "不在线") +'</a>';
+                html += '</li>';
+            }
+            $("#deviceUL").html(html);
+        });
+    }
+
+    $(function() {
+        loadDevice();
+        setInterval(function() {
+            loadDevice();
+        }, 6000);
     });
+
+    function goToDetail(_id) {
+        window.location.href = "/devices/detail/";
+    }
 </script>
