@@ -1,32 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>FEI环境数</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <link rel='stylesheet' type="text/css" href='/stylesheets/main.css' />
+<%- include layouts/header.ejs %>
 </head>
 <body>
-
 <div class="main_box">
   <h1 class="logo" title="七星博士logo"><img src="/images/logo.png" /></h1>
   <h2 class="product">FEI环境数</h2>
   <ul class="equip_list3">
     <li>
-      <input type="text" class="t_gray"  value="请输入用户名" onfocus="if(this.value=='请输入用户名'){this.value=''};
-            this.style.color='#222';" onblur="if(this.value==''||this.value=='请输入用户名'){this.value='请输入用户名';this.style.color='gray';}">
+      <input type="text" id="username" name="username" placeholder="请输入用户名" />
     </li>
     <li>
-      <input type="text" class="t_gray"  value="请输入密码" onfocus="if(this.value=='请输入密码'){this.value=''};
-            this.style.color='#222';" onblur="if(this.value==''||this.value=='请输入密码'){this.value='请输入密码';this.style.color='gray';}">
+      <input type="text" id="password" name="password" placeholder="请输入密码" />
     </li>
   </ul>
-
   <button class="btn_oper" onclick="javascript:window.location.href='/main';">登 录</button>
-
   <div class="login_o clearfix"><a class="a1" href="/register">注册</a><a class="a2" href="/forget_password">忘记密码？</a></div>
-
 </div>
-
 </body>
 </html>

@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var methodOverride = require('method-override');
 var config = require("config");
 var mongoose = require('mongoose');
 var requireDir = require('require-dir');
@@ -23,6 +23,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(methodOverride());
+app.use(expressPromise());
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongodb.uri);
