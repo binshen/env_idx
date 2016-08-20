@@ -12,23 +12,23 @@
     <ul class="equip_list2">
         <li class="clearfix">
             <p>设备编码</p>
-            <em>578654665661323464648586947</em>
+            <em><%= device._id %></em>
         </li>
         <li class="clearfix">
             <p>设备名称</p>
-            <a href="/devices/update_name">银白4b62</a>
+            <a href="/devices/update_name"><%= device.name %></a>
         </li>
         <li class="clearfix">
             <p>类型</p>
-            <em>主机</em>
+            <em><% if (device.type == 1) { %>主机<% } else { %>从机<% } %></em>
         </li>
         <li class="clearfix">
             <p>MAC</p>
-            <em>ACVSEADFD</em>
+            <em><%= device.mac %></em>
         </li>
         <li class="clearfix">
             <p>历史数据</p>
-            <a href="/devices/history">滤网检测</a>
+            <a href="/devices/history"></a>
         </li>
         <li class="clearfix">
             <p>滤网检测</p>
