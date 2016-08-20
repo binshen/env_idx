@@ -8,20 +8,35 @@
 </nav>
 <div class="main_box">
     <ul class="equip_list2">
-        <li class="clearfix">
+        <li class="clearfix" onclick="redirectPage(1)">
             <p>昵称</p>
-            <a href="/users/nickname">测试tester</a>
+            <a href="javascript:void(0);">测试tester</a>
         </li>
-        <li class="clearfix">
+        <li class="clearfix" onclick="redirectPage(2)">
             <p>改密码</p>
-            <a href="/users/password"></a>
+            <a href="javascript:void(0);"></a>
         </li>
-        <li class="clearfix">
+        <li class="clearfix" onclick="redirectPage(3)">
             <p>用户反馈</p>
-            <a href="/users/feedback"></a>
+            <a href="javascript:void(0);"></a>
         </li>
     </ul>
     <button class="btn_oper" onclick="javascript:window.location.href='/users/logout';">退出当前账号</button>
 </div>
 </body>
 </html>
+<script>
+    $(function() {
+
+    });
+
+    function redirectPage(index) {
+        if(index == 1) {
+            window.location.href = "/users/nickname";
+        } else if(index == 2) {
+            window.location.href = "/users/password";
+        } else if(index == 3) {
+            window.location.href = "/users/feedback";
+        }
+    }
+</script>
