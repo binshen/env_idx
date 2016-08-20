@@ -33,7 +33,7 @@
         layer.alert("请输入密码");
         return;
       }
-      $.post("http://121.40.92.176:3000/user/login", {username:username, password:password}, function(data) {
+      $.post(__api_base_url + "/user/login", {username:username, password:password}, function(data) {
         if(data.user) {
           window.location.href = "/main";
         } else {
