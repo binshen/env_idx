@@ -16,7 +16,7 @@
         </li>
         <li class="clearfix">
             <p>设备名称</p>
-            <a href="/devices/update_name"><%= device.name %></a>
+            <a href="/devices/<%= device._id %>/update_name"><%= device.name %></a>
         </li>
         <li class="clearfix">
             <p>类型</p>
@@ -28,14 +28,16 @@
         </li>
         <li class="clearfix">
             <p>历史数据</p>
-            <a href="/devices/history"></a>
+            <a href="/devices/<%= device._id %>/history"></a>
         </li>
-        <li class="clearfix">
-            <p>滤网检测</p>
-            <em></em>
-        </li>
+        <% if (device.type == 1) { %>
+            <li class="clearfix">
+                <p>滤网检测</p>
+                <em></em>
+            </li>
+        <% } %>
     </ul>
-    <button class="btn_oper" onclick="javascript:window.location.href='/devices/';">解绑该设备</button>
+    <button class="btn_oper" onclick="javascript:window.location.href='/devices/<%= device._id %>/unbind';">解绑该设备</button>
 </div>
 </body>
 </html>
