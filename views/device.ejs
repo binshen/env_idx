@@ -16,9 +16,8 @@
 </body>
 </html>
 <script>
-    var _id = '<%= u_id %>';
     function loadDevice() {
-        $.get(__api_base_url + "/user/"+_id+"/get_device_info", function(data) {
+        $.get(__api_base_url + "/user/<%= u_id %>/get_device_info", function(data) {
             $("#deviceUL").empty();
             var html = "";
             for(var i in data) {
@@ -39,7 +38,7 @@
         }, 6000);
     });
 
-    function goToDetail(_id) {
-        window.location.href = "/devices/" + _id + "/detail";
+    function goToDetail(deviceID) {
+        window.location.href = "/devices/" + deviceID + "/detail";
     }
 </script>
