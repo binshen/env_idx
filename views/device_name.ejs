@@ -1,20 +1,39 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>欢迎进入七星博士云</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <link href="/stylesheets/main.css" rel="stylesheet" type="text/css"/>
+<%- include layouts/header.ejs %>
 </head>
 <body>
-<nav class="clearfix"><a class="oper" href="/devices/detail"><img src="/images/ico_back.png" />返回</a>设备名称</nav>
+<nav class="clearfix">
+    <a class="oper" href="/devices/<%= device._id %>/detail">
+        <img src="/images/ico_back.png" />返回
+    </a>设备名称
+</nav>
 <div class="main_box">
     <ul class="equip_list3">
         <li>
-            <input type="text" value="银白4">
+            <input type="text" id="device_name" placeholder="请输入设备名称" value="<% if(device.name != undefined && device.name != "") { %><%= device.mac %><% } else { %><%= device.name %><% } %>">
         </li>
     </ul>
-    <button class="btn_oper">确 定</button>
+    <button class="btn_oper" id="btnConfirm">确 定</button>
 </div>
 </body>
 </html>
+<script>
+    $(function() {
+        $("#btnConfirm").click(function() {
+            var name = $("#device_name").val();
+            if(name == "") {
+                layer.alert("请输入设备名称");
+                return;
+            }
+            $.post(__api_base_url + "/user/<%= u_id %>/device/<%= device._id %>/update_name", function(data) {
+                if(data.user) {
+                    $("#u_id").val(data.user._id);
+                    $("#u_name").val(data.user.username);
+                    $("#n_name").val(data.user.nickname);
+                    $("#frmLogin").submit();
+                } else {
+                    layer.alert("输入的用户名或密码错误");
+                }
+            });
+        });
+    });
+</script>
