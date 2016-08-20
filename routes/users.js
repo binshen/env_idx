@@ -3,7 +3,8 @@ var request = require('request');
 module.exports = function (app, mongoose, config) {
 
     app.get('/users/', function (req, res, next) {
-        res.render('user');
+        var user = req.session.login_user;
+        res.render('user', { username: user.username });
     });
 
     app.get('/users/nickname', function (req, res, next) {
