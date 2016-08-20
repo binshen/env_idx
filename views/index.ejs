@@ -19,6 +19,11 @@
   </div>
 </div>
 </body>
+<form id="frmLogin" method="post" action="/main">
+  <input type="hidden" id="u_id" name="u_id">
+  <input type="hidden" id="u_name" name="u_name">
+  <input type="hidden" id="n_name" name="n_name">
+</form>
 </html>
 <script>
   $(function() {
@@ -34,8 +39,12 @@
         return;
       }
       $.post(__api_base_url + "/user/login", {username:username, password:password}, function(data) {
+      //$.post("/users/login", {username:username, password:password}, function(data) {
         if(data.user) {
-          window.location.href = "/main";
+          $("#u_id").val(data.user._id);
+          $("#u_name").val(data.user.username);
+          $("#n_name").val(data.user.nickname);
+          $("#frmLogin").submit();
         } else {
           layer.alert("输入的用户名或密码错误");
         }

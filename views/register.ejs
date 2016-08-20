@@ -24,21 +24,45 @@
 </body>
 </html>
 <script>
+var __wait = 60;
+function count_down(_this) {
+    if (__wait == 0) {
+        _this.click(function() {
+            requestCode(_this);
+        });
+        _this.text("获取验证码");
+        _this.css("background-color", "#009dff");
+        __wait = 60;
+    } else {
+        _this.text("剩余" + __wait + "秒");
+        __wait--;
+        setTimeout(function() {
+            count_down(_this)
+        }, 1000)
+    }
+}
+
+function requestCode(_this) {
+    var tel = $("#tel").val();
+    if(tel == "") {
+        layer.alert("请输入手机号");
+        return;
+    }
+    $.post(__api_base_url + "/user/request_code", {tel:tel}, function(data) {
+        var success = data.success;
+        if(success) {
+            _this.unbind('click');
+            _this.css("background-color", "grey");
+            count_down(_this);
+        } else {
+            layer.alert(data.error);
+        }
+    });
+}
+
 $(function() {
     $("#btnReqCode").click(function() {
-        var tel = $("#tel").val();
-        if(tel == "") {
-            layer.alert("请输入手机号");
-            return;
-        }
-        $.post(__api_base_url + "/user/request_code", {tel:tel}, function(data) {
-            var success = data.success;
-            if(success) {
-                layer.alert("@@@@@@@@@@@@@@@");
-            } else {
-                layer.alert(data.error);
-            }
-        });
+        requestCode($(this));
     });
 
     $("#btnRegister").click(function() {

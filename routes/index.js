@@ -12,7 +12,9 @@ module.exports = function (app, mongoose, config) {
     res.render('forget_password');
   });
 
-  app.get('/main', function (req, res, next) {
+  app.post('/main', function (req, res, next) {
+    var session = req.session;
+    session.login_user = req.body;
     res.render('main');
   });
 

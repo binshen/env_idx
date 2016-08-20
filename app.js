@@ -9,6 +9,9 @@ var config = require("config");
 var mongoose = require('mongoose');
 var requireDir = require('require-dir');
 var expressPromise = require('express-promise');
+var session = require('express-session');
+var FileStore = require('session-file-store')(session);
+//var MongoStore = require('connect-mongo')(session);
 
 var app = express();
 
@@ -27,9 +30,32 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride());
 app.use(expressPromise());
 
+//session
+var options = {
+  path: "/tmp/sessions/",
+  useAsync: true,
+  reapInterval: 5000,
+  maxAge: 10000
+};
+app.use(session({
+  store: new FileStore(options),
+  secret: 'moral2016_env_idx',
+  resave: true,
+  saveUninitialized: true
+}));
+
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongodb.uri);
 mongoose.set('debug', false);
+
+// app.use(session({
+//   secret: 'moral2016_env_idx',
+//   saveUninitialized: false, // don't create session until something stored
+//   resave: false, //don't save session if unmodified
+//   store: new MongoStore({
+//     mongooseConnection: mongoose.connection
+//   })
+// }));
 
 var models = requireDir(__dirname + '/models');
 for(var i in models) { models[i](mongoose); }
