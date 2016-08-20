@@ -9,7 +9,7 @@
 <div class="main_box">
     <ul class="equip_list3">
         <li>
-            <input type="text" id="device_name" placeholder="请输入设备名称" value="<% if(device.name != undefined && device.name != "") { %><%= device.mac %><% } else { %><%= device.name %><% } %>">
+            <input type="text" id="device_name" placeholder="请输入设备名称" value="<% if(device.name != undefined && device.name != "") { %><%= device.name %><% } else { %><%= device.mac %><% } %>">
         </li>
     </ul>
     <button class="btn_oper" id="btnConfirm">确 定</button>
@@ -24,14 +24,11 @@
                 layer.alert("请输入设备名称");
                 return;
             }
-            $.post(__api_base_url + "/user/<%= u_id %>/device/<%= device._id %>/update_name", function(data) {
-                if(data.user) {
-                    $("#u_id").val(data.user._id);
-                    $("#u_name").val(data.user.username);
-                    $("#n_name").val(data.user.nickname);
-                    $("#frmLogin").submit();
+            $.post(__api_base_url + "/user/<%= u_id %>/device/<%= device._id %>/update_name", {name: name}, function(data) {
+                if(data.success) {
+                    window.location.href = "/devices/<%= device._id %>/detail";
                 } else {
-                    layer.alert("输入的用户名或密码错误");
+                    layer.alert(data.error);
                 }
             });
         });
