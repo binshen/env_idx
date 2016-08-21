@@ -12,9 +12,9 @@
             <p>设备编码</p>
             <em><%= device._id %></em>
         </li>
-        <li class="clearfix">
+        <li class="clearfix" onclick="redirectPage(1)">
             <p>设备名称</p>
-            <a href="/devices/<%= device._id %>/update_name"><%= device.name %></a>
+            <a href="javascript:void(0);"><%= device.name %></a>
         </li>
         <li class="clearfix">
             <p>类型</p>
@@ -24,9 +24,9 @@
             <p>MAC</p>
             <em><%= device.mac %></em>
         </li>
-        <li class="clearfix">
+        <li class="clearfix" onclick="redirectPage(2)">
             <p>历史数据</p>
-            <a href="/devices/<%= device._id %>/history"></a>
+            <a href="javascript:void(0);"></a>
         </li>
         <% if (device.type == 1) { %>
             <li class="clearfix">
@@ -35,7 +35,18 @@
             </li>
         <% } %>
     </ul>
-    <button class="btn_oper" onclick="javascript:window.location.href='/devices/<%= device._id %>/unbind';">解绑该设备</button>
+    <button class="btn_oper" onclick="redirectPage(3);">解绑该设备</button>
 </div>
 </body>
 </html>
+<script>
+    function redirectPage(index) {
+        if(index == 1) {
+            window.location.href = "/devices/<%= device._id %>/update_name";
+        } else if(index == 2) {
+            window.location.href = "/devices/<%= device._id %>/history";
+        } else if(index == 3) {
+            window.location.href = "/devices/<%= device._id %>/unbind";
+        }
+    }
+</script>
