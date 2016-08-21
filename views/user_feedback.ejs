@@ -9,10 +9,29 @@
 <div class="main_box">
     <ul class="equip_list3">
         <li>
-            <textarea rows="4" autofocus></textarea>
+            <textarea id="feedback" name="feedback" rows="4" autofocus></textarea>
         </li>
     </ul>
-    <button class="btn_oper">提 交</button>
+    <button class="btn_oper" id="btnUpdate">提 交</button>
 </div>
 </body>
 </html>
+<script>
+    $(function() {
+        $("#btnUpdate").click(function() {
+            var feedback = $("#feedback").val();
+            if(feedback == "") {
+                layer.alert("请填写反馈信息");
+                return;
+            }
+            $.post(__api_base_url + "/user/<%= u_id %>/feedback", {feedback:feedback}, function(data) {
+                var success = data.success;
+                if(success) {
+                    window.location.href = "/users";
+                } else {
+                    layer.alert(data.error);
+                }
+            });
+        });
+    });
+</script>
