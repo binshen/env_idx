@@ -1,21 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>欢迎进入七星博士云</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <link href="/stylesheets/main.css" rel="stylesheet" type="text/css"/>
-    <link href="/stylesheets/lanrenzhijia.css" type="text/css" rel="stylesheet" />
-    <script src="/javascripts/jquery.min.js"></script>
-    <script src="/javascripts/idangerous.swiper.min.js"></script>
+<%- include layouts/header.ejs %>
+<link href="/stylesheets/lanrenzhijia.css" type="text/css" rel="stylesheet" />
+<script src="/javascripts/idangerous.swiper.min.js"></script>
 </head>
 <body class="home_layout">
 <!-- 代码部分begin -->
 <div class="device">
     <div class="pagination"></div>
-    <nav class="clearfix"><a class="oper" href="/users/"><img src="/images/ico_person.png" /></a>主机8064</nav>
+    <nav class="clearfix">
+        <a class="oper" href="/users/">
+            <img src="/images/ico_person.png" />
+        </a>
+        <span id="title">主机8064</span>
+    </nav>
     <div class="swiper-container">
-        <div class="swiper-wrapper">
+        <div class="swiper-wrapper" id="slideList">
+            <!--
             <div class="swiper-slide">
                 <div class="main">
                     <div class="power"><img src="/images/ic_ele_5.png" /></div>
@@ -40,26 +39,10 @@
             <div class="swiper-slide" style="background-color:#eee">e</div>
             <div class="swiper-slide" style="background-color:#ddd">f</div>
             <div class="swiper-slide" style="background-color:#555">g</div>
+            -->
         </div>
     </div>
 </div>
-<script>
-    var mySwiper = new Swiper('.swiper-container',{
-        pagination: '.pagination',
-        loop:true,
-        grabCursor: true,
-        paginationClickable: true
-    })
-    $('.arrow-left').on('click', function(e){
-        e.preventDefault()
-        mySwiper.swipePrev()
-    })
-    $('.arrow-right').on('click', function(e){
-        e.preventDefault()
-        mySwiper.swipeNext()
-    })
-</script>
-
 <!-- 代码部分end -->
 <footer class="home_footer">
     <div class="menu clearfix">
@@ -69,3 +52,72 @@
 </footer>
 </body>
 </html>
+<script>
+    var currentPage = 1;
+    var deviceList = [];
+
+    var mySwiper = new Swiper('.swiper-container',{
+        pagination: '.pagination',
+        loop:false,
+        grabCursor: true,
+        paginationClickable: true,
+        onSlideNext: function(swiper) {
+            currentPage++;
+        },
+        onSlidePrev: function(swiper) {
+            currentPage--;
+        },
+        onSlideChangeStart: function(swiper) {
+            console.log(currentPage);
+        },
+//        onSlideChangeEnd: function(swiper) {
+//
+//        },
+    });
+    $('.arrow-left').on('click', function(e){
+        e.preventDefault();
+        mySwiper.swipePrev();
+    });
+    $('.arrow-right').on('click', function(e){
+        e.preventDefault();
+        mySwiper.swipeNext();
+    });
+
+    function loadDeviceList() {
+        $.get(__api_base_url + "/user/<%= user.u_id %>/get_device", function(data) {
+            deviceList = data;
+            //mySwiper.swipeTo(3, 0);
+            var html = "";
+            for(var i in data) {
+                var d = data[i];
+                //console.log(d);
+                html += '<div class="swiper-slide">';
+                html += '  <div class="main">';
+                html += '    <div class="power"><img src="/images/ic_ele_5.png" /></div>';
+                html += '    <ul class="grade clearfix">';
+                html += '      <li class="face"><img src="/images/rank_1.gif" /></li>';
+                html += '      <li class="level">优</li>';
+                html += '      <li class="lighting"><img src="/images/light_01.png" /></li>';
+                html += '    </ul>';
+                html += '    <h2><p>618ddd3</p>0.3um颗粒数个数</h2>';
+                html += '    <h3>上次检测时间：<p>2016-08-16 08:49:27</p></h3>';
+                html += '    <ul class="parameter clearfix">';
+                html += '      <li><a href="/monitor"><p>30000ug/m³</p>pm2.5</a></li>';
+                html += '      <li><a><p>31℃</p>温度</a></li>';
+                html += '      <li><a><p>38%</p>湿度</a></li>';
+                html += '      <li class="last"><a><p>0.01mg/m³</p>甲醛</a></li>';
+                html += '    </ul>';
+                html += '  </div>';
+                html += '</div>';
+            }
+            $("#slideList").html(html);
+        });
+    }
+
+    $(function() {
+        loadDeviceList();
+        setInterval(function() {
+            loadDeviceList();
+        }, 6000);
+    });
+</script>

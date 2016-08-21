@@ -15,11 +15,12 @@ module.exports = function (app, mongoose, config) {
   app.post('/main', function (req, res, next) {
     var session = req.session;
     session.login_user = req.body;
-    res.render('main');
+    res.render('main', {user: session.login_user});
   });
 
-  app.get('/main/', function (req, res, next) {
-    res.render('main');
+  app.get('/main', function (req, res, next) {
+    var session = req.session;
+    res.render('main', {user: session.login_user});
   });
 
   app.get('/monitor', function (req, res, next) {
