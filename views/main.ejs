@@ -63,8 +63,10 @@
             //mySwiper.swipeTo(3, 0);
             var html = "";
             for(var i in data) {
-                var d = data[i];
-                //console.log(d);
+                var d = data[i].data;
+                if(d == null) {
+                    d = { x1:0, x3:0, x9:0, x10:0, x11:0 }
+                }
                 html += '<div class="swiper-slide">';
                 html += '  <div class="main">';
                 html += '    <div class="power"><img src="/images/ic_ele_5.png" /></div>';
@@ -73,13 +75,13 @@
                 html += '      <li class="level">优</li>';
                 html += '      <li class="lighting"><img src="/images/light_01.png" /></li>';
                 html += '    </ul>';
-                html += '    <h2><p>' + i + '</p>0.3um颗粒数个数</h2>';
+                html += '    <h2><p>' + d.x3 + '</p>0.3um颗粒数个数</h2>';
                 html += '    <h3>上次检测时间：<p>2016-08-16 08:49:27</p></h3>';
                 html += '    <ul class="parameter clearfix">';
-                html += '      <li><a href="/monitor"><p>30000ug/m³</p>pm2.5</a></li>';
-                html += '      <li><a><p>31℃</p>温度</a></li>';
-                html += '      <li><a><p>38%</p>湿度</a></li>';
-                html += '      <li class="last"><a><p>0.01mg/m³</p>甲醛</a></li>';
+                html += '      <li><a href="/monitor"><p>' + d.x1 + 'ug/m³</p>pm2.5</a></li>';
+                html += '      <li><a><p>' + d.x11 + '℃</p>温度</a></li>';
+                html += '      <li><a><p>' + d.x10 + '%</p>湿度</a></li>';
+                html += '      <li class="last"><a><p>' + d.x9 + 'mg/m³</p>甲醛</a></li>';
                 html += '    </ul>';
                 html += '  </div>';
                 html += '</div>';
