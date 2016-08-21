@@ -55,33 +55,7 @@
 <script>
     var currentPage = 1;
     var deviceList = [];
-
-    var mySwiper = new Swiper('.swiper-container',{
-        pagination: '.pagination',
-        loop:false,
-        grabCursor: true,
-        paginationClickable: true,
-        onSlideNext: function(swiper) {
-            currentPage++;
-        },
-        onSlidePrev: function(swiper) {
-            currentPage--;
-        },
-        onSlideChangeStart: function(swiper) {
-            console.log(currentPage);
-        },
-//        onSlideChangeEnd: function(swiper) {
-//
-//        },
-    });
-    $('.arrow-left').on('click', function(e){
-        e.preventDefault();
-        mySwiper.swipePrev();
-    });
-    $('.arrow-right').on('click', function(e){
-        e.preventDefault();
-        mySwiper.swipeNext();
-    });
+    var mySwiper;
 
     function loadDeviceList() {
         $.get(__api_base_url + "/user/<%= user.u_id %>/get_device", function(data) {
@@ -99,7 +73,7 @@
                 html += '      <li class="level">优</li>';
                 html += '      <li class="lighting"><img src="/images/light_01.png" /></li>';
                 html += '    </ul>';
-                html += '    <h2><p>618ddd3</p>0.3um颗粒数个数</h2>';
+                html += '    <h2><p>' + i + '</p>0.3um颗粒数个数</h2>';
                 html += '    <h3>上次检测时间：<p>2016-08-16 08:49:27</p></h3>';
                 html += '    <ul class="parameter clearfix">';
                 html += '      <li><a href="/monitor"><p>30000ug/m³</p>pm2.5</a></li>';
@@ -111,13 +85,38 @@
                 html += '</div>';
             }
             $("#slideList").html(html);
+
+            var options = {
+                pagination: '.pagination',
+                loop: false,
+                grabCursor: true,
+                //paginationClickable: true,
+                onSlideNext: function (swiper) {
+                    currentPage++;
+                },
+                onSlidePrev: function (swiper) {
+                    currentPage--;
+                },
+                onSlideChangeStart: function (swiper) {
+                    console.log(currentPage);
+                }
+            }
+            mySwiper = new Swiper('.swiper-container', options);
+        });
+    }
+
+    function updateCurrentPage() {
+        $.get(__api_base_url + "/user/<%= user.u_id %>/get_device", function (data) {
+            deviceList = data;
+
+
         });
     }
 
     $(function() {
         loadDeviceList();
         setInterval(function() {
-            loadDeviceList();
+            updateCurrentPage();
         }, 6000);
     });
 </script>
