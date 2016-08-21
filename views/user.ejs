@@ -10,7 +10,7 @@
     <ul class="equip_list2">
         <li class="clearfix" onclick="redirectPage(1)">
             <p>昵称</p>
-            <a href="javascript:void(0);"><%= username %></a>
+            <a href="javascript:void(0);"><%= n_name %></a>
         </li>
         <li class="clearfix" onclick="redirectPage(2)">
             <p>改密码</p>
@@ -26,10 +26,6 @@
 </body>
 </html>
 <script>
-    $(function() {
-
-    });
-
     function redirectPage(index) {
         if(index == 1) {
             window.location.href = "/users/nickname";

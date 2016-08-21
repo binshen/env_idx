@@ -9,10 +9,29 @@
 <div class="main_box">
     <ul class="equip_list3">
         <li>
-            <input type="text" value="测试tester">
+            <input type="text" id="nicknane" name="nicknane" placeholder="用户昵称" value="<%= n_name %>">
         </li>
     </ul>
-    <button class="btn_oper">修 改</button>
+    <button class="btn_oper" id="btnUpdate">修 改</button>
 </div>
 </body>
 </html>
+<script>
+    $(function() {
+        $("#btnUpdate").click(function() {
+            var nickname = $("#nicknane").val();
+            if(nickname == "") {
+                layer.alert("请输入用户昵称");
+                return;
+            }
+            $.post(__api_base_url + "/user/<%= u_id %>/update_name", {nickname:nickname}, function(data) {
+                var success = data.success;
+                if(success) {
+                    window.location.href = "/users/<%= u_id %>";
+                } else {
+                    layer.alert(data.error);
+                }
+            });
+        });
+    })
+</script>
