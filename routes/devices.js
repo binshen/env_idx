@@ -4,7 +4,7 @@ module.exports = function (app, mongoose, config) {
 
     var Device = mongoose.model('Device');
 
-    app.get('/devices/', function (req, res, next) {
+    app.get('/devices', function (req, res, next) {
         var user = req.session.login_user;
         res.render('device', {u_id: user.u_id});
     });
@@ -15,10 +15,10 @@ module.exports = function (app, mongoose, config) {
 
     app.get('/devices/:device/detail', function (req, res, next) {
         var deviceID = req.params.device;
+        var user = req.session.login_user;
         Device.findOne({ _id: deviceID }, function(err, doc) {
             if (err) return next(err);
-            doc.mac = doc.mac.toUpperCase();
-            res.render('device_detail', {device: doc});
+            res.render('device_detail', {device: doc, u_id: user.u_id});
         });
     });
 
