@@ -2,29 +2,50 @@
 </head>
 <body>
 <nav class="clearfix">
-    <a class="oper" href="/devices/<%= deviceID %>/detail">
+    <a class="oper" href="/devices/<%= device._id %>/detail">
         <img src="/images/ico_back.png" />返回
-    </a>银白4b62
+    </a><%= device.name %>
 </nav>
 <div class="main_box">
     <div class="equip_box">
         <form>
-            <select>
-                <option value="1">2016-08-17</option>
-                <option value="2">Saab</option>
-                <option value="3">Fiat</option>
-                <option value="4">Audi</option>
+            <select id="selectDay">
+                <option value="20160815">2015-08-15</option>
+                <option value="20160816">2015-08-16</option>
+                <option value="20160817">2015-08-17</option>
+                <option value="20160818">2015-08-18</option>
+                <option value="20160819">2015-08-19</option>
             </select>
         </form>
-        <h2>3774</h2>
+        <h2 id="vMain">0</h2>
         <em>净化空气总量</em>
     </div>
     <ul class="parameter clearfix">
-        <li><p>30000ug/m³</p>pm2.5</li>
-        <li><p>31℃</p>温度</li>
-        <li><p>38%</p>湿度</li>
-        <li><p>0.01mg/m³</p>甲醛</li>
+        <li><p><span id="vData1">0</span>ug/m³</p>pm2.5</li>
+        <li><p><span id="vData2">0</span>℃</p>温度</li>
+        <li><p><span id="vData3">0</span>%</p>湿度</li>
+        <li><p><span id="vData4">0</span>mg/m³</p>甲醛</li>
     </ul>
 </div>
 </body>
 </html>
+<script>
+    function initPage(day) {
+        $.get(__api_base_url + "/device/mac/<%= device.mac %>/get_history?day=" + day, function(data) {
+            if(Object.keys(data).length > 0) {
+                $("#vMain").text(Math.round(data.x3));
+                $("#vData1").text(Math.round(data.x1));
+                $("#vData2").text(Math.round(data.x11));
+                $("#vData3").text(Math.round(data.x10));
+                $("#vData4").text(Math.round(data.x9 * 100) / 100);
+            }
+        });
+    }
+    $(function() {
+        initPage($("#selectDay").val());
+
+        $("#selectDay").change(function() {
+            initPage($(this).val());
+        });
+    });
+</script>

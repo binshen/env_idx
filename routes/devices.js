@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 module.exports = function (app, mongoose, config) {
 
     var Device = mongoose.model('Device');
@@ -32,7 +34,11 @@ module.exports = function (app, mongoose, config) {
 
     app.get('/devices/:device/history', function (req, res, next) {
         var deviceID = req.params.device;
-        res.render('device_history', {deviceID: deviceID});
+        var today = moment().format('YYYYMMDD');
+        Device.findOne({ _id: deviceID }, function(err, doc) {
+            if (err) return next(err);
+            res.render('device_history', {device: doc, today: today});
+        });
     });
 
     app.get('/devices/:device/unbind', function (req, res, next) {
