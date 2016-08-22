@@ -25,11 +25,19 @@
         <button onclick="javascript:window.location.href='http://moral.tmall.com';" class="btn2"><span>在线商城</span></button>
     </div>
 </footer>
+<form id="frmMain" method="post" action="/monitor">
+    <input type="hidden" id="created" name="created"/>
+    <input type="hidden" id="p_val_1" name="p_val_1"/>
+    <input type="hidden" id="p_val_2" name="p_val_2"/>
+    <input type="hidden" id="p_val_3" name="p_val_3"/>
+    <input type="hidden" id="p_val_4" name="p_val_4"/>
+    <input type="hidden" id="priority" name="priority"/>
+    <input type="hidden" id="fei_lvl" name="fei_lvl"/>
+</form>
 </body>
 </html>
 <script>
     var currentPage = 1;
-
     var options = {
         pagination: '.pagination',
         loop: false,
@@ -147,6 +155,14 @@
                     }
                 }
 
+                $("#created").val(new Date(created).format("yyyy-MM-dd hh:mm:ss"));
+                $("#p_val_1").val(x1);
+                $("#p_val_2").val(x11);
+                $("#p_val_3").val(x10);
+                $("#p_val_4").val(x9);
+                $("#priority").val(p1);
+                $("#fei_lvl").val(fei);
+
                 html += '<div class="swiper-slide">';
                 html += '  <div class="main" id="_main_' + i + '">';
                 html += '    <div class="power">' + electric + '</div>';
@@ -158,10 +174,10 @@
                 html += '    <h2><p>' + main + '</p>' + mainLable + '</h2>';
                 html += '    <h3>' + suggest + '</h3>';
                 html += '    <ul class="parameter clearfix">';
-                html += '      <li><a href="/monitor/mac/' + mac + '/1"><p>' + x1 + 'ug/m³</p>pm2.5</a></li>';
-                html += '      <li><a href="/monitor/mac/' + mac + '/2"><p>' + x11 + '℃</p>温度</a></li>';
-                html += '      <li><a href="/monitor/mac/' + mac + '/3"><p>' + x10 + '%</p>湿度</a></li>';
-                html += '      <li class="last"><a href="/monitor/mac/' + mac + '/4"><p>' + x9 + 'mg/m³</p>甲醛</a></li>';
+                html += '      <li><a href="javascript:void(0);" onclick="showMonitor(1)"><p>' + x1 + 'ug/m³</p>pm2.5</a></li>';
+                html += '      <li><a href="javascript:void(0);" onclick="showMonitor(2)"><p>' + x11 + '℃</p>温度</a></li>';
+                html += '      <li><a href="javascript:void(0);" onclick="showMonitor(3)"><p>' + x10 + '%</p>湿度</a></li>';
+                html += '      <li class="last"><a href="javascript:void(0);" onclick="showMonitor(4)"><p>' + x9 + 'mg/m³</p>甲醛</a></li>';
                 html += '    </ul>';
                 html += '  </div>';
                 html += '</div>';
@@ -270,6 +286,14 @@
                 }
             }
 
+            $("#created").val(new Date(created).format("yyyy-MM-dd hh:mm:ss"));
+            $("#p_val_1").val(x1);
+            $("#p_val_2").val(x11);
+            $("#p_val_3").val(x10);
+            $("#p_val_4").val(x9);
+            $("#priority").val(p1);
+            $("#fei_lvl").val(fei);
+
             var html = '';
             html += '<div class="power">' + electric + '</div>';
             html += '<ul class="grade clearfix">';
@@ -280,10 +304,10 @@
             html += '<h2><p>' + main + '</p>' + mainLable + '</h2>';
             html += '<h3>' + suggest + '</h3>';
             html += '<ul class="parameter clearfix">';
-            html += '  <li><a href="/monitor/mac/' + mac + '/1"><p>' + x1 + 'ug/m³</p>pm2.5</a></li>';
-            html += '  <li><a href="/monitor/mac/' + mac + '/2"><p>' + x11 + '℃</p>温度</a></li>';
-            html += '  <li><a href="/monitor/mac/' + mac + '/3"><p>' + x10 + '%</p>湿度</a></li>';
-            html += '  <li class="last"><a href="/monitor/mac/' + mac + '/4"><p>' + x9 + 'mg/m³</p>甲醛</a></li>';
+            html += '  <li><a href="javascript:void(0);" onclick="showMonitor(1)"><p>' + x1 + 'ug/m³</p>pm2.5</a></li>';
+            html += '  <li><a href="javascript:void(0);" onclick="showMonitor(2)"><p>' + x11 + '℃</p>温度</a></li>';
+            html += '  <li><a href="javascript:void(0);" onclick="showMonitor(3)"><p>' + x10 + '%</p>湿度</a></li>';
+            html += '  <li class="last"><a href="javascript:void(0);" onclick="showMonitor(4)"><p>' + x9 + 'mg/m³</p>甲醛</a></li>';
             html += '</ul>';
             $("#_main_" + i).html(html);
         });
@@ -296,4 +320,9 @@
             updateCurrentPage();
         }, 6000);
     });
+
+    function showMonitor(index) {
+        $("#frmMain").attr('action', '/monitor/' + index);
+        $("#frmMain").submit();
+    }
 </script>

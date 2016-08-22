@@ -23,9 +23,8 @@ module.exports = function (app, mongoose, config) {
     res.render('main', {user: session.login_user});
   });
 
-  app.get('/monitor/mac/:mac/:index', function (req, res, next) {
-    var mac = req.params.mac;
+  app.post('/monitor/:index', function (req, res, next) {
     var index = req.params.index;
-    res.render('monitor', {mac:mac, index:index});
+    res.render('monitor', {index:index, data:req.body});
   });
 };

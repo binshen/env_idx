@@ -9,43 +9,43 @@
     <nav class="clearfix">
         <a class="oper" href="/main/">
             <img src="/images/ico_back.png" />返回
-        </a><span>PM2.5</span>
+        </a><span id="title">PM2.5</span>
     </nav>
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <div class="main2">
-                    <div class="time">2016-08-16 17:01:33</div>
+                    <div class="time"><%= data.created %></div>
                     <div class="data1">
                         <h3>PM2.5</h3>
-                        <h2><p>33</p>ug/m³</h2>
+                        <h2><p><%= data.p_val_1 %></p>ug/m³</h2>
                     </div>
                 </div>
             </div>
             <div class="swiper-slide">
                 <div class="main2">
-                    <div class="time">2016-08-16 17:01:33</div>
+                    <div class="time"><%= data.created %></div>
                     <div class="data2">
                         <h3>温度</h3>
-                        <h2><p>30</p>℃</h2>
+                        <h2><p><%= data.p_val_2 %></p>℃</h2>
                     </div>
                 </div>
             </div>
             <div class="swiper-slide">
                 <div class="main2">
-                    <div class="time">2016-08-16 17:01:33</div>
+                    <div class="time"><%= data.created %></div>
                     <div class="data3">
                         <h3>湿度</h3>
-                        <h2><p>43</p>%</h2>
+                        <h2><p><%= data.p_val_3 %></p>%</h2>
                     </div>
                 </div>
             </div>
             <div class="swiper-slide">
                 <div class="main2">
-                    <div class="time">2016-08-16 17:01:33</div>
+                    <div class="time"><%= data.created %></div>
                     <div class="data4">
                         <h3>甲醛</h3>
-                        <h2><p>0.09</p>mg/m³</h2>
+                        <h2><p><%= data.p_val_4 %></p>mg/m³</h2>
                     </div>
                 </div>
             </div>
@@ -53,20 +53,60 @@
     </div>
     <footer>
         <div class="pagination pagination2"></div>
-        <div class="comment clearfix"><img src="/images/face_04.gif" /><p>你家的空气太糟糕啦，我要离家出走了~</p></div>
+        <div class="comment clearfix" id="evaluate"></div>
     </footer>
 </div>
 
 <script>
-    var mySwiper = new Swiper('.swiper-container',{
+    var currentPage = '<%= index %>';
+    var pm_data = '<%= data.p_val_1 %>';
+    var priority = '<%= data.priority %>';
+    var fei_lvl = '<%= data.fei_lvl %>';
+
+    var nameList = ['PM2.5', '温度', '湿度', '甲醛'];
+    var options = {
         pagination: '.pagination',
-        loop:false,
+        loop: false,
         grabCursor: true,
-        //paginationClickable: true
-    });
+        //paginationClickable: true,
+        onSlideNext: function (swiper) {
+            currentPage++;
+        },
+        onSlidePrev: function (swiper) {
+            currentPage--;
+        },
+        onSlideChangeStart: function (swiper) {
+            $("#title").text(nameList[currentPage-1]);
+        }
+    };
+    var mySwiper = new Swiper('.swiper-container', options);
 
     $(function() {
-        mySwiper.swipeTo(<%= index - 1 %>, 0);
+        mySwiper.swipeTo('<%= index - 1 %>', 0);
+
+        var html = "";
+        if(priority > 0) {
+            if(fei_lvl == 1) {
+                html = '<img src="/images/face_01.gif" /><p>咱家空气棒棒哒，连呼吸都是甜的呢~</p>';
+            } else if(fei_lvl == 2) {
+                html = '<img src="/images/face_02.gif" /><p>空气不错哦~只要再一丢丢的努力就完美啦~</p>';
+            } else if(fei_lvl == 3) {
+                html = '<img src="/images/face_03.gif" /><p>加把劲吧，咱家空气需要大大的改善~</p>';
+            } else {
+                html = '<img src="/images/face_04.gif" /><p>你家的空气太糟糕啦，我要离家出走了~</p>';
+            }
+        } else {
+            if(pm_data <= 35) {
+                html = '<img src="/images/face_01.gif" /><p>咱家空气棒棒哒，连呼吸都是甜的呢~</p>';
+            } else if(pm_data <= 75) {
+                html = '<img src="/images/face_02.gif" /><p>空气不错哦~只要再一丢丢的努力就完美啦~</p>';
+            } else if(pm_data <= 150) {
+                html = '<img src="/images/face_03.gif" /><p>加把劲吧，咱家空气需要大大的改善~</p>';
+            } else {
+                html = '<img src="/images/face_04.gif" /><p>你家的空气太糟糕啦，我要离家出走了~</p>';
+            }
+        }
+        $("#evaluate").html(html);
     });
 </script>
 <!-- 代码部分end -->
