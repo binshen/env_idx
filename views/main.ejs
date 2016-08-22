@@ -1,5 +1,6 @@
 <%- include layouts/header.ejs %>
 <link href="/stylesheets/lanrenzhijia.css" type="text/css" rel="stylesheet" />
+<script src="/javascripts/app.js"></script>
 <script src="/javascripts/idangerous.swiper.min.js"></script>
 </head>
 <body class="home_layout">
@@ -10,7 +11,7 @@
         <a class="oper" href="/users/">
             <img src="/images/ico_person.png" />
         </a>
-        <span id="title">主机8064</span>
+        <span id="title"></span>
     </nav>
     <div class="swiper-container">
         <div class="swiper-wrapper" id="slideList">
@@ -55,55 +56,156 @@
 <script>
     var currentPage = 1;
     var deviceList = [];
+
+    var options = {
+        pagination: '.pagination',
+        loop: false,
+        grabCursor: true,
+        //paginationClickable: true,
+        onSlideNext: function (swiper) {
+            currentPage++;
+        },
+        onSlidePrev: function (swiper) {
+            currentPage--;
+        },
+        onSlideChangeStart: function (swiper) {
+            $("#title").text(nameList[currentPage-1]);
+            //console.log(currentPage);
+        }
+    };
     var mySwiper;
+    var nameList = [];
 
     function loadDeviceList() {
         $.get(__api_base_url + "/user/<%= user.u_id %>/get_device", function(data) {
             deviceList = data;
             //mySwiper.swipeTo(3, 0);
+
+            console.log(data);
+
             var html = "";
             for(var i in data) {
+                nameList.push(data[i].name);
+
                 var d = data[i].data;
                 if(d == null) {
                     d = { x1:0, x3:0, x9:0, x10:0, x11:0 }
                 }
+
+                var status = data[i].status;
+                var type = data[i].type;
+                var x1 = d.x1;
+                var x3 = d.x3;
+                var x9 = d.x9;
+                var x10 = d.x10;
+                var x11 = d.x11;
+                var x12 = d.x12;
+                var x13 = d.x13;
+                var x14 = d.x14;
+                var p1 = d.p1;
+                var p2 = d.p2;
+                var p3 = d.p3;
+                var p4 = d.p4;
+                var fei = d.fei;
+                var created = d.created;
+
+                var suggest = '';
+                var electric = '';
+                if(status == 1) {
+                    suggest = '云端在线';
+                    if(type == 1) {
+                        if(x13 > 0 && x13 <= 4) {
+                            electric = '<img src="/images/ic_ele_' + x13 + '.png" />';
+                        }
+                    }
+                } else {
+                    if(created != undefined) {
+                        suggest = '上次检测时间：<p>' + (created == undefined ? "" : new Date(created).format("yyyy-MM-dd hh:mm:ss")) + '</p>';
+                    }
+                }
+
+                var main = '';
+                var mainLable = '';
+                if(p1 == 3) {
+                    main = x9;
+                    mainLable = '当前甲醛浓度（mg/m³）';
+                } else if(p1 == 4) {
+                    main = x11;
+                    mainLable = '当前温度（℃）';
+                } else {
+                    main = x3;
+                    mainLable = '0.3um颗粒物个数';
+                }
+
+                var quality = '';
+                var rank = '';
+                if(p1 > 0) {
+                    if(fei == 1) {
+                        quality = '优';
+                        rank = '<img src="/images/rank_1.gif" />';
+                    } else if(fei == 2) {
+                        quality = '良';
+                        rank = '<img src="/images/rank_2.gif" />';
+                    } else if(fei == 3) {
+                        quality = '中';
+                        rank = '<img src="/images/rank_3.gif" />';
+                    } else if(fei == 4) {
+                        quality = '差';
+                        rank = '<img src="/images/rank_4.gif" />';
+                    } else {
+                        quality = '未知';
+                    }
+                } else {
+                    if(x1 <= 35) {
+                        quality = '优';
+                        rank = '<img src="/images/rank_1.gif" />';
+                    } else if(x1 <= 75) {
+                        quality = '良';
+                        rank = '<img src="/images/rank_2.gif" />';
+                    } else if(x1 <= 150) {
+                        quality = '中';
+                        rank = '<img src="/images/rank_3.gif" />';
+                    } else {
+                        quality = '差';
+                        rank = '<img src="/images/rank_4.gif" />';
+                    }
+                }
+
+                var light = '';
+                if(x14 > 0) {
+                    if(x14 > 500) {
+                        light = '<img src="/images/light_01.png" />';
+                    } else if(x14 < 240) {
+                        light = '<img src="/images/light_03.png" />';
+                    } else {
+                        light = '<img src="/images/light_02.png" />';
+                    }
+                }
+
                 html += '<div class="swiper-slide">';
                 html += '  <div class="main">';
-                html += '    <div class="power"><img src="/images/ic_ele_5.png" /></div>';
+                html += '    <div class="power">' + electric + '</div>';
                 html += '    <ul class="grade clearfix">';
-                html += '      <li class="face"><img src="/images/rank_1.gif" /></li>';
-                html += '      <li class="level">优</li>';
-                html += '      <li class="lighting"><img src="/images/light_01.png" /></li>';
+                html += '      <li class="face">' + rank + '</li>';
+                html += '      <li class="level">' + quality + '</li>';
+                html += '      <li class="lighting">' + light + '</li>';
                 html += '    </ul>';
-                html += '    <h2><p>' + d.x3 + '</p>0.3um颗粒数个数</h2>';
-                html += '    <h3>上次检测时间：<p>2016-08-16 08:49:27</p></h3>';
+                html += '    <h2><p>' + main + '</p>' + mainLable + '</h2>';
+                html += '    <h3>' + suggest + '</h3>';
                 html += '    <ul class="parameter clearfix">';
-                html += '      <li><a href="/monitor"><p>' + d.x1 + 'ug/m³</p>pm2.5</a></li>';
-                html += '      <li><a><p>' + d.x11 + '℃</p>温度</a></li>';
-                html += '      <li><a><p>' + d.x10 + '%</p>湿度</a></li>';
-                html += '      <li class="last"><a><p>' + d.x9 + 'mg/m³</p>甲醛</a></li>';
+                html += '      <li><a href="/monitor"><p>' + x1 + 'ug/m³</p>pm2.5</a></li>';
+                html += '      <li><a><p>' + x11 + '℃</p>温度</a></li>';
+                html += '      <li><a><p>' + x10 + '%</p>湿度</a></li>';
+                html += '      <li class="last"><a><p>' + x9 + 'mg/m³</p>甲醛</a></li>';
                 html += '    </ul>';
                 html += '  </div>';
                 html += '</div>';
             }
             $("#slideList").html(html);
 
-            var options = {
-                pagination: '.pagination',
-                loop: false,
-                grabCursor: true,
-                //paginationClickable: true,
-                onSlideNext: function (swiper) {
-                    currentPage++;
-                },
-                onSlidePrev: function (swiper) {
-                    currentPage--;
-                },
-                onSlideChangeStart: function (swiper) {
-                    console.log(currentPage);
-                }
-            }
             mySwiper = new Swiper('.swiper-container', options);
+
+            $("#title").text(nameList[0]);
         });
     }
 
