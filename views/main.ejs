@@ -68,7 +68,6 @@
                     d = { x1:0, x3:0, x9:0, x10:0, x11:0 }
                 }
 
-                var mac = data[i].mac;
                 var status = data[i].status;
                 var type = data[i].type;
                 var x1 = d.x1;
@@ -87,9 +86,11 @@
                 if(status == 1) {
                     suggest = '云端在线';
                     if(type == 1) {
-                        if(x13 > 0 && x13 <= 4) {
-                            electric = '<img src="/images/ic_ele_' + x13 + '.png" />';
+                        if(x13 >= 0 && x13 <= 4) {
+                            electric = '<img src="/images/ic_ele_n' + x13 + '.png" />';
                         }
+                    } else {
+                        electric = '<img src="/images/ic_ele_n4.png" />';
                     }
                 } else {
                     if(created != undefined) {
@@ -200,7 +201,6 @@
                 d = { x1:0, x3:0, x9:0, x10:0, x11:0 }
             }
 
-            var mac = data[i].mac;
             var status = data[i].status;
             var type = data[i].type;
             var x1 = d.x1;
@@ -220,8 +220,10 @@
                 suggest = '云端在线';
                 if(type == 1) {
                     if(x13 > 0 && x13 <= 4) {
-                        electric = '<img src="/images/ic_ele_' + x13 + '.png" />';
+                        electric = '<img src="/images/ic_ele_n' + x13 + '.png" />';
                     }
+                } else {
+                    electric = '<img src="/images/ic_ele_n4.png" />';
                 }
             } else {
                 if(created != undefined) {
