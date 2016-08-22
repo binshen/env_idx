@@ -24,10 +24,10 @@
                 layer.alert("请输入用户昵称");
                 return;
             }
-            $.post(__api_base_url + "/user/<%= u_id %>/update_name", {nickname:nickname}, function(data) {
+            $.post(__api_base_url + "/user/<%= login_uid %>/update_name", {nickname:nickname}, function(data) {
                 var success = data.success;
                 if(success) {
-                    window.location.href = "/users/<%= u_id %>";
+                    window.location.href = "/users/<%= login_uid %>";
                 } else {
                     layer.alert(data.error);
                 }

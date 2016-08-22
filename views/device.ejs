@@ -22,7 +22,7 @@
 </html>
 <script>
     function loadDevice() {
-        $.get(__api_base_url + "/user/<%= u_id %>/get_device_info", function(data) {
+        $.get(__api_base_url + "/user/<%= login_uid %>/get_device_info", function(data) {
             $("#deviceUL").empty();
             var html = "";
             for(var i in data) {

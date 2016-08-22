@@ -8,3 +8,11 @@
     <script src="/javascripts/jquery.min.js"></script>
     <script src="/libs/layer/layer.js"></script>
     <script src="/javascripts/app.js"></script>
+
+<% if(login_uid) { %>
+    <script type="application/javascript">
+        setInterval(function() {
+            $.post(__api_base_url + "/user/<%= login_uid %>/online", function(data) {})
+        }, 10000);
+    </script>
+<% } %>

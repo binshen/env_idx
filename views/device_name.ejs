@@ -24,7 +24,7 @@
                 layer.alert("请输入设备名称");
                 return;
             }
-            $.post(__api_base_url + "/user/<%= u_id %>/device/<%= device._id %>/update_name", {name: name}, function(data) {
+            $.post(__api_base_url + "/user/<%= login_uid %>/device/<%= device._id %>/update_name", {name: name}, function(data) {
                 if(data.success) {
                     window.location.href = "/devices/<%= device._id %>/detail";
                 } else {

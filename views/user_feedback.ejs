@@ -24,7 +24,7 @@
                 layer.alert("请填写反馈信息");
                 return;
             }
-            $.post(__api_base_url + "/user/<%= u_id %>/feedback", {feedback:feedback}, function(data) {
+            $.post(__api_base_url + "/user/<%= login_uid %>/feedback", {feedback:feedback}, function(data) {
                 var success = data.success;
                 if(success) {
                     window.location.href = "/users";
