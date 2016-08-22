@@ -2,6 +2,8 @@
  * Created by bin.shen on 8/22/16.
  */
 
+var __api_base_url = "http://121.40.92.176:3000";
+
 Date.prototype.format = function(fmt) {
     var o = {
         "M+" : this.getMonth()+1,                 //月份
