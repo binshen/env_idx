@@ -23,7 +23,7 @@ module.exports = function (app, mongoose, config) {
     res.render('main', {user: session.login_user});
   });
 
-  app.get('/monitor', function (req, res, next) {
+  app.get('/monitor/mac/:mac/:index', function (req, res, next) {
     res.render('monitor');
   });
 };
