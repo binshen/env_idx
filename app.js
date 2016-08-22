@@ -32,6 +32,7 @@ var accessLogStream = FileStreamRotator.getStream({
   frequency: 'daily',
   verbose: false
 });
+
 app.use(logger('combined', {
   stream: accessLogStream,
   skip: function (req, res) { return res.statusCode < 400 }
