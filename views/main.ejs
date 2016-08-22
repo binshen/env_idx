@@ -15,32 +15,6 @@
     </nav>
     <div class="swiper-container">
         <div class="swiper-wrapper" id="slideList">
-            <!--
-            <div class="swiper-slide">
-                <div class="main">
-                    <div class="power"><img src="/images/ic_ele_5.png" /></div>
-                    <ul class="grade clearfix">
-                        <li class="face"><img src="/images/rank_1.gif" /></li>
-                        <li class="level">优</li>
-                        <li class="lighting"><img src="/images/light_01.png" /></li>
-                    </ul>
-                    <h2><p>618ddd3</p>0.3um颗粒数个数</h2>
-                    <h3>上次检测时间：<p>2016-08-16 08:49:27</p></h3>
-                    <ul class="parameter clearfix">
-                        <li><a href="/monitor"><p>30000ug/m³</p>pm2.5</a></li>
-                        <li><a><p>31℃</p>温度</a></li>
-                        <li><a><p>38%</p>湿度</a></li>
-                        <li class="last"><a><p>0.01mg/m³</p>甲醛</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="swiper-slide" style="background-color:#eee">b</div>
-            <div class="swiper-slide" style="background-color:#ddd">c</div>
-            <div class="swiper-slide" style="background-color:#555">d</div>
-            <div class="swiper-slide" style="background-color:#eee">e</div>
-            <div class="swiper-slide" style="background-color:#ddd">f</div>
-            <div class="swiper-slide" style="background-color:#555">g</div>
-            -->
         </div>
     </div>
 </div>
@@ -77,8 +51,6 @@
 
     function loadDeviceList() {
         $.get(__api_base_url + "/user/<%= user.u_id %>/get_device", function(data) {
-            //mySwiper.swipeTo(3, 0);
-
             var html = "";
             for(var i in data) {
                 nameList.push(data[i].name);

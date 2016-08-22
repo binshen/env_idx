@@ -24,6 +24,8 @@ module.exports = function (app, mongoose, config) {
   });
 
   app.get('/monitor/mac/:mac/:index', function (req, res, next) {
-    res.render('monitor');
+    var mac = req.params.mac;
+    var index = req.params.index;
+    res.render('monitor', {mac:mac, index:index});
   });
 };
