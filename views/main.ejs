@@ -4,7 +4,12 @@
 </head>
 <body class="home_layout">
 <!-- 代码部分begin -->
-<div class="device">
+<div class="device" ondblclick="PageDbClick();">
+    <div style="overflow:hidden;display: none" id="spinnerDiv">
+        <span style="position:absolute;left:50%;top:50%;">
+            <img style="position:relative;left:-50%;top:-50%;" width="40" src="/images/spinner.gif">
+        </span>
+    </div>
     <div class="pagination"></div>
     <nav class="clearfix">
         <a class="oper" href="/users/">
@@ -57,6 +62,7 @@
     var nameList = [];
 
     function loadDeviceList() {
+        $("#spinnerDiv").show();
         $.get(__api_base_url + "/user/<%= user.u_id %>/get_device", function(data) {
             var html = "";
             for(var i in data) {
@@ -188,10 +194,12 @@
             mySwiper = new Swiper('.swiper-container', options);
 
             $("#title").text(nameList[0]);
+            $("#spinnerDiv").hide();
         });
     }
 
     function updateCurrentPage() {
+        $("#spinnerDiv").show();
         $.get(__api_base_url + "/user/<%= user.u_id %>/get_device", function (data) {
             var i = currentPage -1;
 
@@ -313,13 +321,16 @@
             html += '  <input type="hidden" value="' + fei + '" name="fei_lvl"/>';
             html += '</form>';
             $("#_main_" + i).html(html);
+
+            $("#spinnerDiv").hide();
         });
     }
 
+    var intHandle;
     $(function() {
         loadDeviceList();
 
-        setInterval(function() {
+        intHandle = setInterval(function() {
             updateCurrentPage();
         }, 6000);
     });
@@ -328,5 +339,14 @@
         var i = currentPage - 1;
         $("#frmMain_" + i).attr('action', '/monitor/' + index);
         $("#frmMain_" + i).submit();
+    }
+
+    function PageDbClick() {
+        clearInterval(intHandle);
+        updateCurrentPage();
+
+        intHandle = setInterval(function() {
+            updateCurrentPage();
+        }, 6000);
     }
 </script>
