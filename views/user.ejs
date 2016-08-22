@@ -21,7 +21,7 @@
             <a href="javascript:void(0);"></a>
         </li>
     </ul>
-    <button class="btn_oper" onclick="javascript:window.location.href='/users/logout';">退出当前账号</button>
+    <button class="btn_oper" onclick="logout();">退出当前账号</button>
 </div>
 </body>
 </html>
@@ -34,5 +34,15 @@
         } else if(index == 3) {
             window.location.href = "/users/feedback";
         }
+    }
+
+    function logout() {
+        $.post(__api_base_url + "/user/<%= login_uid %>/offline", function(data) {
+            window.location.href='/users/logout';
+        });
+
+        setTimeout(function() {
+            window.location.href='/users/logout';
+        }, 3000);
     }
 </script>
