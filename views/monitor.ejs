@@ -1,18 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>欢迎进入七星博士云</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <link href="/stylesheets/main.css" rel="stylesheet" type="text/css"/>
-    <link href="/stylesheets/lanrenzhijia.css" type="text/css" rel="stylesheet" />
-    <script src="/javascripts/jquery.min.js"></script>
-    <script src="/javascripts/idangerous.swiper.min.js"></script>
+<%- include layouts/header.ejs %>
+<link href="/stylesheets/lanrenzhijia.css" type="text/css" rel="stylesheet" />
+<script src="/javascripts/app.js"></script>
+<script src="/javascripts/idangerous.swiper.min.js"></script>
 </head>
 <body>
 <!-- 代码部分begin -->
 <div class="device">
-    <nav class="clearfix"><a class="oper" href="/main/"><img src="images/ico_back.png" />返回</a>PM2.5</nav>
+    <nav class="clearfix">
+        <a class="oper" href="/main/">
+            <img src="/images/ico_back.png" />返回
+        </a><span>PM2.5</span>
+    </nav>
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
@@ -20,13 +18,37 @@
                     <div class="time">2016-08-16 17:01:33</div>
                     <div class="data1">
                         <h3>PM2.5</h3>
-                        <h2><p>70</p>mg/m³</h2>
+                        <h2><p>33</p>ug/m³</h2>
                     </div>
                 </div>
             </div>
-            <div class="swiper-slide" style="background-color:#eee">b</div>
-            <div class="swiper-slide" style="background-color:#ddd">c</div>
-            <div class="swiper-slide" style="background-color:#555">d</div>
+            <div class="swiper-slide">
+                <div class="main2">
+                    <div class="time">2016-08-16 17:01:33</div>
+                    <div class="data2">
+                        <h3>温度</h3>
+                        <h2><p>30</p>℃</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="main2">
+                    <div class="time">2016-08-16 17:01:33</div>
+                    <div class="data3">
+                        <h3>湿度</h3>
+                        <h2><p>43</p>%</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="main2">
+                    <div class="time">2016-08-16 17:01:33</div>
+                    <div class="data4">
+                        <h3>甲醛</h3>
+                        <h2><p>0.09</p>mg/m³</h2>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <footer>
@@ -38,18 +60,10 @@
 <script>
     var mySwiper = new Swiper('.swiper-container',{
         pagination: '.pagination',
-        loop:true,
+        loop:false,
         grabCursor: true,
-        paginationClickable: true
-    })
-    $('.arrow-left').on('click', function(e){
-        e.preventDefault()
-        mySwiper.swipePrev()
-    })
-    $('.arrow-right').on('click', function(e){
-        e.preventDefault()
-        mySwiper.swipeNext()
-    })
+        //paginationClickable: true
+    });
 </script>
 <!-- 代码部分end -->
 </body>
