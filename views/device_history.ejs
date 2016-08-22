@@ -10,11 +10,9 @@
     <div class="equip_box">
         <form>
             <select id="selectDay">
-                <option value="20160815">2015-08-15</option>
-                <option value="20160816">2015-08-16</option>
-                <option value="20160817">2015-08-17</option>
-                <option value="20160818">2015-08-18</option>
-                <option value="20160819">2015-08-19</option>
+                <% for(var i in days) { %>
+                    <option value="<%= days[i][0] %>" <%if(i == days.length - 1){%>selected<%}%>><%= days[i][1] %></option>
+                <% } %>
             </select>
         </form>
         <h2 id="vMain">0</h2>

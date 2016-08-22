@@ -35,9 +35,14 @@ module.exports = function (app, mongoose, config) {
     app.get('/devices/:device/history', function (req, res, next) {
         var deviceID = req.params.device;
         var today = moment().format('YYYYMMDD');
+        var days = [];
+        for(var i = 31; i--; i >= 0) {
+            var day = moment().add(-i, 'd');
+            days.push([day.format('YYYYMMDD'), day.format('YYYY-MM-DD')]);
+        }
         Device.findOne({ _id: deviceID }, function(err, doc) {
             if (err) return next(err);
-            res.render('device_history', {device: doc, today: today});
+            res.render('device_history', {device: doc, days: days});
         });
     });
 
