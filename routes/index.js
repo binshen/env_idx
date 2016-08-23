@@ -27,4 +27,8 @@ module.exports = function (app, mongoose, config) {
     var index = req.params.index;
     res.render('monitor', {index:index, data:req.body, login_uid: req.session.login_user.u_id});
   });
+
+  app.get('/shop', function (req, res, next) {
+    res.render('shop', {login_uid: req.session.login_user.u_id});
+  });
 };
