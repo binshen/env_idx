@@ -4,7 +4,7 @@
 </head>
 <body class="home_layout">
 <!-- 代码部分begin -->
-<div class="device" ondblclick="PageDbClick();">
+<div class="device">
     <div style="overflow:hidden;display: none" id="spinnerDiv">
         <span style="position:absolute;left:50%;top:50%;">
             <img style="position:relative;left:-50%;top:-50%;" width="40" src="/images/spinner.gif">
@@ -17,8 +17,8 @@
         </a>
         <span id="title"></span>
     </nav>
-    <div class="swiper-container">
-        <div class="swiper-wrapper" id="slideList">
+    <div class="swiper-container" >
+        <div class="swiper-wrapper" id="slideList" onclick="PageDbClick(this);">
         </div>
     </div>
 </div>
@@ -341,12 +341,33 @@
         $("#frmMain_" + i).submit();
     }
 
-    function PageDbClick() {
-        clearInterval(intHandle);
-        updateCurrentPage();
+//////////////////////////////////////////////////////////////////
+    function doubleclick(el, onsingle, ondouble) {
+        if (el.getAttribute("data-dblclick") == null) {
+            el.setAttribute("data-dblclick", 1);
+            setTimeout(function () {
+                if (el.getAttribute("data-dblclick") == 1) {
+                    onsingle();
+                }
+                el.removeAttribute("data-dblclick");
+            }, 300);
+        } else {
+            el.removeAttribute("data-dblclick");
+            ondouble();
+        }
+    }
 
-        intHandle = setInterval(function() {
+    function PageDbClick(_this) {
+        doubleclick(_this, function(){
+            //alert('single')
+        }, function(){
+            //alert('double')
+            clearInterval(intHandle);
             updateCurrentPage();
-        }, 6000);
+
+            intHandle = setInterval(function() {
+                updateCurrentPage();
+            }, 6000);
+        });
     }
 </script>
