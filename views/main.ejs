@@ -1,7 +1,7 @@
 <%- include layouts/header.ejs %>
 <link href="/stylesheets/lanrenzhijia.css" type="text/css" rel="stylesheet" />
 <script src="/javascripts/idangerous.swiper.min.js"></script>
-<script src="/javascripts/touchable.js"></script>
+<!-- <script src="/javascripts/touchable.js"></script> -->
 </head>
 <body class="home_layout">
 <!-- 代码部分begin -->
@@ -19,7 +19,7 @@
         <span id="title"></span>
     </nav>
     <div class="swiper-container" >
-        <div class="swiper-wrapper" id="slideList">
+        <div class="swiper-wrapper" id="slideList" onclick="PageDbClick(this);">
         </div>
     </div>
 </div>
@@ -329,15 +329,15 @@
 
     var intHandle;
     $(function() {
-        var div = $("#slideList").Touchable();
-        div.bind('doubleTap', function() {
-            clearInterval(intHandle);
-            updateCurrentPage();
-
-            intHandle = setInterval(function() {
-                updateCurrentPage();
-            }, 6000);
-        })
+//        var div = $("#slideList").Touchable();
+//        div.bind('doubleTap', function() {
+//            clearInterval(intHandle);
+//            updateCurrentPage();
+//
+//            intHandle = setInterval(function() {
+//                updateCurrentPage();
+//            }, 6000);
+//        })
 
         loadDeviceList();
 
@@ -353,32 +353,51 @@
     }
 
 //////////////////////////////////////////////////////////////////
-    function doubleclick(el, onsingle, ondouble) {
-        if (el.getAttribute("data-dblclick") == null) {
-            el.setAttribute("data-dblclick", 1);
-            setTimeout(function () {
-                if (el.getAttribute("data-dblclick") == 1) {
-                    onsingle();
-                }
-                el.removeAttribute("data-dblclick");
-            }, 300);
-        } else {
-            el.removeAttribute("data-dblclick");
-            ondouble();
-        }
-    }
+//    function doubleclick(el, onsingle, ondouble) {
+//        if (el.getAttribute("data-dblclick") == null) {
+//            el.setAttribute("data-dblclick", 1);
+//            setTimeout(function () {
+//                if (el.getAttribute("data-dblclick") == 1) {
+//                    onsingle();
+//                }
+//                el.removeAttribute("data-dblclick");
+//            }, 300);
+//        } else {
+//            el.removeAttribute("data-dblclick");
+//            ondouble();
+//        }
+//    }
+//
+//    function PageDbClick(_this) {
+//        doubleclick(_this, function(){
+//            //alert('single')
+//        }, function(){
+//            //alert('double')
+//            clearInterval(intHandle);
+//            updateCurrentPage();
+//
+//            intHandle = setInterval(function() {
+//                updateCurrentPage();
+//            }, 6000);
+//        });
+//    }
 
-    function PageDbClick(_this) {
-        doubleclick(_this, function(){
-            //alert('single')
-        }, function(){
-            //alert('double')
+    var clickTimer = null;
+    function PageDbClick() {
+        if (clickTimer == null) {
+            clickTimer = setTimeout(function () {
+                clickTimer = null;
+            }, 500)
+        } else {
+            clearTimeout(clickTimer);
+            clickTimer = null;
+
             clearInterval(intHandle);
             updateCurrentPage();
 
             intHandle = setInterval(function() {
                 updateCurrentPage();
             }, 6000);
-        });
+        }
     }
 </script>
