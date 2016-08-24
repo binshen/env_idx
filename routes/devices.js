@@ -9,7 +9,7 @@ module.exports = function (app, mongoose, config) {
     });
 
     app.get('/devices/add', function (req, res, next) {
-        res.render('device_add', {login_uid: req.session.login_user.u_id});
+        res.render('device_intro', {login_uid: req.session.login_user.u_id});
     });
 
     app.get('/devices/:device/detail', function (req, res, next) {
