@@ -1,5 +1,5 @@
 var moment = require('moment');
-
+var ua_parser = require('ua-parser');
 module.exports = function (app, mongoose, config) {
 
     var Device = mongoose.model('Device');
@@ -9,7 +9,12 @@ module.exports = function (app, mongoose, config) {
     });
 
     app.get('/devices/add', function (req, res, next) {
-        res.render('device_intro', {login_uid: req.session.login_user.u_id});
+        res.render('device_add', {login_uid: req.session.login_user.u_id});
+    });
+
+    app.get('/devices/intro', function (req, res, next) {
+        var r = ua_parser(req.headers['user-agent']);
+        res.render('device_intro', {device:r.device.family, login_uid: req.session.login_user ? req.session.login_user.u_id : null});
     });
 
     app.get('/devices/:device/detail', function (req, res, next) {
