@@ -3,11 +3,12 @@
 <body>
 
     <nav class="clearfix"><a class="oper" href="/devices/">
-        <img src="/images/ico_back.png" />返回</a>添加设备<%= device %></nav>
+        <img src="/images/ico_back.png" />返回</a>添加设备<%= os %></nav>
 
     <div class="main_box">
         <h4 class="code_t">请下载环境数APP进行配网哦~</h4>
 
+        <% if(!/Android/.test(os)) {%>
         <ul class="code_list">
             <li>
                 <p>IOS版本<span>（长按图片识别二维码）</span></p>
@@ -15,13 +16,15 @@
             </li>
 
         </ul>
-
+        <% } %>
+        <% if(!/iOS/.test(os)) {%>
         <ul class="code_list">
             <li>
                 <p>Android版本<span>（长按图片识别二维码）</span></p>
                 <img src="/images/code2.png"/>
             </li>
         </ul>
+        <% } %>
     </div>
 </body>
 </html>
