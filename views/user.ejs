@@ -16,6 +16,10 @@
             <p>改密码</p>
             <a href="javascript:void(0);"></a>
         </li>
+        <li class="clearfix">
+            <p>家庭综合指数</p>
+            <a href="javascript:void(0);" id="txtAvgNumber">123</a>
+        </li>
         <li class="clearfix" onclick="redirectPage(3)">
             <p>用户反馈</p>
             <a href="javascript:void(0);"></a>
@@ -26,6 +30,12 @@
 </body>
 </html>
 <script>
+    $(function(){
+        $.get(__api_base_url + '/user/<%= login_uid %>/get_avg_data', function(data) {
+            $("#txtAvgNumber").text(data.avg);
+        });
+    });
+
     function redirectPage(index) {
         if(index == 1) {
             window.location.href = "/users/nickname";
